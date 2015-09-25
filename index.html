@@ -23,16 +23,6 @@
 			html, body, #map {
 				height: 100%;
 			}
-
-			.info {
-				width: 150px;
-				padding: 6px 8px;
-				font: 14px/16px Arial, Helvetica, sans-serif;
-				background: white;
-				background: rgba(255,255,255,1);
-				box-shadow: 0 0 15px rgba(0,0,0,0.2);
-				border-radius: 5px;
-			}
 		</style>
 		
 	</head>
@@ -43,12 +33,6 @@
 		<script type="text/JavaScript">
 		
 			// Create the map
-			var osmUrl = '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-				osm = new L.TileLayer(osmUrl, {
-					maxZoom: 22,
-					attribution: "Map data &copy; OpenStreetMap contributors"
-				});
-
 			var map = new L.Map('map', {
 				center: new L.LatLng(49.41923, 8.6783),
 				zoom: 19,
@@ -60,20 +44,11 @@
 			// overlay a single image on map
 			var imageUrl = 'images/sample-map-f2.png',
 			imageBounds = [[49.41873, 8.67689], [49.41973, 8.67959]];
-
 			L.imageOverlay(imageUrl, imageBounds).addTo(map);
 			
 			
 			// add a simple marker pop-up
-			var myIcon = L.icon({
-				iconUrl: 'images/marker-icon.png',
-				iconSize: [38, 38],
-				iconAnchor: [19, 38],
-				popupAnchor: [0, -38],
-			});
-			
-			
-			L.marker([49.41931, 8.67746], {icon: myIcon}).addTo(map)
+			L.marker([49.41931, 8.67746]).addTo(map)
 			.bindPopup('<strong>Port 44A</strong><br>Michael Griner (id-12345)');
 			
 			// for testing lat and long
