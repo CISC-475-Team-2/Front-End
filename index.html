@@ -1,0 +1,87 @@
+<!doctype html>
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<!--Tell mobile to disable unwanted scaling-->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		
+		<title>LeafletJS Map Demo</title>
+		<link rel="stylesheet" href="js/leaflet/leaflet.css" />
+
+		<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		
+		<style type="text/css">
+			body {
+				padding: 0;
+				margin: 0;
+			}
+
+			html, body, #map {
+				height: 100%;
+			}
+
+			.info {
+				width: 150px;
+				padding: 6px 8px;
+				font: 14px/16px Arial, Helvetica, sans-serif;
+				background: white;
+				background: rgba(255,255,255,1);
+				box-shadow: 0 0 15px rgba(0,0,0,0.2);
+				border-radius: 5px;
+			}
+		</style>
+		
+	</head>
+
+	<body>
+		<div id="map"></div>
+		<script src="js/leaflet/leaflet.js"></script>
+		<script type="text/JavaScript">
+		
+			// Create the map
+			var osmUrl = '//{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+				osm = new L.TileLayer(osmUrl, {
+					maxZoom: 22,
+					attribution: "Map data &copy; OpenStreetMap contributors"
+				});
+
+			var map = new L.Map('map', {
+				center: new L.LatLng(49.41923, 8.6783),
+				zoom: 19,
+				minZoom:16,
+				maxZoom: 22
+			});
+			
+			
+			// overlay a single image on map
+			var imageUrl = 'images/sample-map-f2.png',
+			imageBounds = [[49.41873, 8.67689], [49.41973, 8.67959]];
+
+			L.imageOverlay(imageUrl, imageBounds).addTo(map);
+			
+			
+			// add a simple marker pop-up
+			var myIcon = L.icon({
+				iconUrl: 'images/marker-icon.png',
+				iconSize: [38, 38],
+				iconAnchor: [19, 38],
+				popupAnchor: [0, -38],
+			});
+			
+			
+			L.marker([49.41931, 8.67746], {icon: myIcon}).addTo(map)
+			.bindPopup('<strong>Port 44A</strong><br>Michael Griner (id-12345)');
+			
+			// for testing lat and long
+			function onMapClick(e) {
+				alert("You clicked the map at " + e.latlng);
+			}
+
+			map.on('click', onMapClick);
+		</script>
+	</body>
+	</html>
