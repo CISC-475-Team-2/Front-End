@@ -1,0 +1,12 @@
+body {
+    padding-top: 45px;
+    margin: 0;
+}
+
+html, body, #map {
+    height: 100%;
+}
+
+#floorlabel {
+    color: #E5E5E5;
+}

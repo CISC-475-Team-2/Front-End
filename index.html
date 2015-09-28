@@ -5,6 +5,8 @@
 <!-- Bootstrap -->
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/sticky-footer.css" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
 <head>
     <meta charset="utf-8">
 
@@ -17,17 +19,12 @@
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+    
+    <!--Already has some>
+    <input type="text" placeholder="Search..." required>
+    <input type="button" value="Search">
+    <!-->
 
-    <style type="text/css">
-        body {
-            padding-top: 45px;
-            margin: 0;
-        }
-
-        html, body, #map {
-            height: 100%;
-        }
-    </style>
 
 </head>
 
@@ -49,6 +46,13 @@
                     <input type="text" placeholder="Name" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-success">Search</button>
+                <label for="floorpick" id="floorlabel">Floor</label>
+                    <select class="form-control" id="floorpick">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                    </select>
             </form>
         </div><!--/.navbar-collapse -->
     </div>
