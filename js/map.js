@@ -186,7 +186,12 @@ document.getElementById('office1').addEventListener('click', function(){
 
 			indoorLayer.addTo(map);
 			
-			levelControl.removeFrom(map);
+			try{
+				levelControl.removeFrom(map);
+			}
+			catch(e){
+				// its already removed, just ignore.
+			}
 			levelControl = new L.Control.Level({
 				level: "1",
 				levels: indoorLayer.getLevels()
