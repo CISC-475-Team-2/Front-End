@@ -1,30 +1,23 @@
 <!doctype html>
 
 <html lang="en">
-<title>Mock-Design</title>
-<!-- Bootstrap -->
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/sticky-footer.css" rel="stylesheet">
-
-<link rel="stylesheet" href="css/style.css" type="text/css" />
 <head>
     <meta charset="utf-8">
 
     <!--Tell mobile to disable unwanted scaling-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
 
-    <title>LeafletJS Map Demo</title>
-    <link rel="stylesheet" href="leaflet/leaflet.css"/>
+    <title>Mock-Design</title>
+	<!-- Bootstrap -->
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/sticky-footer.css" rel="stylesheet">
 
+	<link rel="stylesheet" href="css/style.css" type="text/css" />
+    <link rel="stylesheet" href="leaflet/leaflet.css"/>
+	
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    
-    <!--Already has some>
-    <input type="text" placeholder="Search..." required>
-    <input type="button" value="Search">
-    <!-->
-
 
 </head>
 
@@ -41,65 +34,42 @@
             <a class="navbar-brand" href="#">Mock-Design</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-left">
+				<li class="active" id="office1"><a href="#">Conshohocken<span class="sr-only">(current)</span></a></li>
+				<li id="office2"><a href="#">San Diego</a></li>
+			</ul>
             <form class="navbar-form navbar-right">
                 <div class="form-group">
                     <input type="text" placeholder="Name" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-success">Search</button>
-                <label for="floorpick" id="floorlabel">Floor</label>
-                    <select class="form-control" id="floorpick">
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                    </select>
             </form>
         </div><!--/.navbar-collapse -->
     </div>
 </nav>
+	
     <div id="map"></div>
+
+	<footer class="footer">
+	<div class="btn-group pull-left" role="group" aria-label="...">
+		<button type="button" class="btn btn-default hidden" id="btnEditMap">Edit Map</button>
+		<button type="button" class="btn btn-default hidden" id="btnSaveJson">Save JSON</button>
+	</div>
+	   <div style="text-align: center;">
+		   <ul class="pager">
+			   <li><a href="#">Previous</a></li>
+			   <li><a href="#">Next</a></li>
+		   </ul>
+	   </div>
+	</footer>
+
+	
+	<!-- scripts below -->
     <script src="leaflet/leaflet.js"></script>
-    <script type="text/JavaScript">
-
-        // Create the map
-        var map = new L.Map('map', {
-            center: new L.LatLng(49.41923, 8.6783),
-            zoom: 19,
-            minZoom: 16,
-            maxZoom: 22
-        });
-
-
-        // overlay a single image on map
-        var imageUrl = 'images/sample-map-f2.png',
-                imageBounds = [[49.41873, 8.67689], [49.41973, 8.67959]];
-        L.imageOverlay(imageUrl, imageBounds).addTo(map);
-
-
-        // add a simple marker pop-up
-        L.marker([49.41931, 8.67746]).addTo(map)
-                .bindPopup('<strong>Port 44A</strong><br>Michael Griner (id-12345)');
-
-        // for testing lat and long
-        function onMapClick(e) {
-            alert("You clicked the map at " + e.latlng);
-        }
-
-        map.on('click', onMapClick);
-    </script>
+	<script src="leaflet/leaflet-indoor/leaflet-indoor.js"></script>
+	<script src="js/map.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-
-<footer class="footer">
-   <div style="text-align: center;">
-       <ul class="pager">
-           <li><a href="#">Previous</a></li>
-           <li><a href="#">Next</a></li>
-       </ul>
-   </div>
-</footer>
-
-</button>
 </body>
 </html>
