@@ -1,9 +1,15 @@
 body {
     padding-top: 45px;
-	padding-bottom:60px;
+	padding-bottom:100px;
     margin: 0;
 }
 
 html, body, #map {
     height: 100%;
+}
+
+.map-marker{
+	background-color:blue;
+	border-radius:50%;
+	opacity:.85;
 }
