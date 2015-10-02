@@ -98,6 +98,7 @@ $('document').ready(function(){
 					  '</tr>' +
 					'</table>';
 			
+			// this can be used to update what shows up in pop-ups based on the features other values
 			//feature.properties.popupContent = "<strong>Location: " + location + "</strong><br>" + name + "(id-" + feature.properties.id + ")";
 			
 			// if clicked open popup but also set a flag so mouseout doesn't close popup
@@ -203,15 +204,23 @@ $('document').ready(function(){
 	document.getElementById('search-form').addEventListener('submit', function(event){
 		event.preventDefault();
 		var searchString = document.getElementById('search-input').value.toLowerCase().trim();
+		
+		// handle layer removal
 		if(office==1){
 			map.removeLayer(office1Layer);
-			office1Layer = new L.Indoor(geojsonFeatures, {
+		}
+		else if(office==2){
+			map.removeLayer(office2Layer);
+		}
+		
+		// update both layers
+		office1Layer = new L.Indoor(geojsonFeatures, {
 				onEachFeature: onEachFeature,
 				pointToLayer: function (feature, latlng) {
 						return L.marker(latlng, {icon: geojsonMarkerOptions});
 				},
 				filter: function(feature, layer) {
-					if(feature.properties.name.toLowerCase().trim().indexOf(searchString) > -1){
+					if(feature.properties.name.toLowerCase().trim().indexOf(searchString) > -1 && feature.properties.office == 1){
 						return true;
 					}
 					else{
@@ -219,11 +228,30 @@ $('document').ready(function(){
 					}
 				}
 			});
+			
+		office2Layer = new L.Indoor(geojsonFeatures, {
+				onEachFeature: onEachFeature,
+				pointToLayer: function (feature, latlng) {
+						return L.marker(latlng, {icon: geojsonMarkerOptions});
+				},
+				filter: function(feature, layer) {
+					if(feature.properties.name.toLowerCase().trim().indexOf(searchString) > -1 && feature.properties.office == 2){
+						return true;
+					}
+					else{
+						return false;
+					}
+				}
+		});
+		
+		// handle layer addition
+		if(office==1){
 			office1Layer.setLevel(level);
 			office1Layer.addTo(map);
 		}
-		else if(office==1){
-			
+		else if(office==2){
+			office2Layer.setLevel(level);
+			office2Layer.addTo(map);
 		}
 	}, false);
 
