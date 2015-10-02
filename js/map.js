@@ -200,6 +200,33 @@ function changeMapImage(e){
 
 // --Event listeners-----------------------------//
 
+document.getElementById('search-form').addEventListener('submit', function(event){
+	event.preventDefault();
+	var searchString = document.getElementById('search-input').value.toLowerCase().trim();
+	if(office==1){
+		map.removeLayer(office1Layer);
+		office1Layer = new L.Indoor(geojsonFeatures, {
+			onEachFeature: onEachFeature,
+			pointToLayer: function (feature, latlng) {
+					return L.marker(latlng, {icon: geojsonMarkerOptions});
+			},
+			filter: function(feature, layer) {
+				if(feature.properties.name.toLowerCase().trim().indexOf(searchString) > -1){
+					return true;
+				}
+				else{
+					return false;
+				}
+			}
+		});
+		office1Layer.setLevel(level);
+		office1Layer.addTo(map);
+	}
+	else if(office==1){
+		
+	}
+}, false);
+
 document.getElementById('office1').addEventListener('click', function(){
 	document.getElementById('office1').classList.add("active");
 	document.getElementById('office2').classList.remove("active");
