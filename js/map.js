@@ -81,22 +81,24 @@ $('document').ready(function(){
 			var phone = feature.properties.phone;
 			
 			var userTable ='' +
-					'<table class="table">' +
-					  '<tr>' +
-						'<th>Name</th>' +
-						'<th>Office</th> ' +
-						'<th>Physical Location</th>' +
-						'<th>Email</th>' +
-						'<th>Phone</th>' +
-					  '</tr>' +
-					  '<tr>' +
-						'<td>' + name + '</td>' +
-						'<td>' + office + '</td> ' +
-						'<td>' + location + '</td>' +
-						'<td>' + email + '</td>' +
-						'<td>' + phone + '</td>' +
-					  '</tr>' +
-					'</table>';
+					'<div class="table-responsive">' +
+						'<table class="table table-condensed">' +
+						  '<tr>' +
+							'<th>Name</th>' +
+							'<th>Office</th> ' +
+							'<th>Physical Location</th>' +
+							'<th>Email</th>' +
+							'<th>Phone</th>' +
+						  '</tr>' +
+						  '<tr>' +
+							'<td>' + name + '</td>' +
+							'<td>' + office + '</td> ' +
+							'<td>' + location + '</td>' +
+							'<td>' + email + '</td>' +
+							'<td>' + phone + '</td>' +
+						  '</tr>' +
+						'</table>' +
+					'</div>';
 			
 			// this can be used to update what shows up in pop-ups based on the features other values
 			//feature.properties.popupContent = "<strong>Location: " + location + "</strong><br>" + name + "(id-" + feature.properties.id + ")";
