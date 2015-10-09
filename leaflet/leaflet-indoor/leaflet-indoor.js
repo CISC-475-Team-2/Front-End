@@ -201,7 +201,7 @@ L.Control.Level = L.Control.extend({
     includes: L.Mixin.Events,
 
     options: {
-        position: 'bottomright',
+        position: 'topleft',
 
         // used to get a unique integer for each level to be used to order them
         parseLevel: function(level) {
@@ -220,10 +220,10 @@ L.Control.Level = L.Control.extend({
         this.addEventListener("levelchange", this._levelChange, this);
     },
     onAdd: function(map) {
-        var div = L.DomUtil.create('div', 'leaflet-bar leaflet-control');
+        var div = L.DomUtil.create('div', 'btn-group');
 
-		div.style.font = "bold 18px 'Lucida Console',Monaco,monospace";
-		div.style.textIndent = "1px";
+		//div.style.font = "bold 18px 'Lucida Console',Monaco,monospace";
+		//div.style.textIndent = "1px";
 		
         var buttons = this._buttons;
         var activeLevel = this._level;
@@ -246,18 +246,18 @@ L.Control.Level = L.Control.extend({
             return a.num - b.num;
         });
 
-        for (i=levels.length-1; i>=0; i--) {
+        for (i=0; i<=levels.length-1; i++) {
             var level = levels[i].num;
             var originalLevel = levels[i].label;
 
-            var levelBtn = L.DomUtil.create('a', 'leaflet-button-part', div);
+            var levelBtn = L.DomUtil.create('button', 'btn btn-default', div);
 			levelBtn.href = "#";  // gives it look and feel of button
 			
             if (level === activeLevel || originalLevel === activeLevel) {
                 levelBtn.style.backgroundColor = "#b0b0b0";
             }
 
-            levelBtn.appendChild(levelBtn.ownerDocument.createTextNode(originalLevel));
+            levelBtn.appendChild(levelBtn.ownerDocument.createTextNode("Floor " + originalLevel));
 
             (function(level) {
                 levelBtn.onclick = function() {

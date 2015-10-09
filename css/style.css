@@ -13,3 +13,7 @@ html, body, #map {
 	border-radius:50%;
 	opacity:.85;
 }
+
+.btn-group.leaflet-control {
+	clear: none;
+}
