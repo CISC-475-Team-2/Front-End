@@ -255,6 +255,11 @@ $('document').ready(function(){
 			office2Layer.setLevel(level);
 			office2Layer.addTo(map);
 		}
+		
+		// blur then focus: this keeps the user in the control
+		// but clears auto-complete pop-out when they submit
+		$("#search-input").blur();
+		$("#search-input").focus();
 	}, false);
 
 	document.getElementById('office1').addEventListener('click', function(){
