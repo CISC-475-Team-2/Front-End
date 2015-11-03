@@ -31,6 +31,9 @@
 				
 				layers.createLayers({type:"FeatureCollection", "features":[]});
 			},
+			getMap(){
+				return mapObject;
+			}
 		};
 		
 		var buildings = {
@@ -93,7 +96,7 @@
 					var floor = buildings.getFloor(office, floorNum);
 					if(floor === undefined){
 						var overlay = L.imageOverlay(imageURL, map.options.imageBounds).addTo(mapObject);
-						office.floorList.push({'floor': floorNum, 'url': imageURL, 'image': overlay});
+						office.floorList.push({'floor': floorNum, 'url': imageURL, 'image': overlay, 'markers': []});
 					}
 					else{
 						throw 'The floor with id: ' + floorNum + ' already exists.';
@@ -125,6 +128,7 @@
 				levelControl.addEventListener('levelchange', office.layer.setLevel, office.layer);
 				levelControl.addEventListener('levelchange', function(e){buildings.getFloor(currentOffice, e.newLevel).image.bringToFront()});
 				levelControl.addEventListener('levelchange', function(e){currentFloor = e.newLevel});
+				levelControl.addEventListener('levelchange', function(e){util.populateUserList()});
 				levelControl.addTo(mapObject);
 			},
 			getLevels(officeNum){
@@ -139,12 +143,17 @@
 		
 		var layers = {
 			createLayers: function(data){
-				officeList.forEach(function(element, index, array){
-					element.layer = new L.Indoor(data, {
+				$.each(officeList, function(index, office){
+					$.each(office.floorList, function(index, floor){
+						if(floor.markers){
+							floor.markers = [];
+						}
+					});
+					office.layer = new L.Indoor(data, {
 						onEachFeature: util.onEachFeature,
 						pointToLayer: util.pointToLayer,
 						filter: function(feature, layer){
-							if(feature.properties.office == element.id){
+							if(feature.properties.office == office.id){
 								return true;
 							}
 							else{
@@ -155,20 +164,31 @@
 				});
 			},
 			createSearchLayers: function(data, searchString){
-				officeList.forEach(function(element, index, array){
-					mapObject.removeLayer(element.layer);
-					element.layer = new L.Indoor(data, {
+				$.each(officeList, function(index, office){
+					$.each(office.floorList, function(index, floor){
+						if(floor.markers){
+							floor.markers = [];
+						}
+					});
+					mapObject.removeLayer(office.layer);
+					office.layer = new L.Indoor(data, {
 						onEachFeature: util.onEachFeature,
 						pointToLayer: util.pointToLayer,
 						filter: function(feature, layer){
-							if(feature.properties.office == element.id){
-								if(feature.properties.name.toLowerCase().trim().indexOf(searchString) > -1){
+							if(feature.properties.office == office.id){
+								var found = false;
+								$.each(feature.users, function(index, user){
+									var name = user.firstName + ' ' + user.lastName;
+									if(name.toLowerCase().trim().indexOf(searchString) > -1){
+										found = true;
+										return;
+									}
+								});
+								if(found){
 									return true;
 								}
 							}
-							else{
-								return false;
-							}
+							return false;
 						}
 					});
 				});
@@ -209,24 +229,59 @@
 				popupAnchor: [0, -18],
 				html: ''
 			}),
+			getVisibleMarkers(){
+				var markers = buildings.getOffice(currentOffice).floorList[currentFloor - 1].markers;
+				var bounds = mapObject.getBounds();
+				console.log(markers);
+				console.log(bounds);
+				var results = [];
+				$.each(markers, function(key, value){
+					if(bounds.contains(value._latlng)){
+						console.log(value.feature.users[0].firstName);
+						results.push(value.feature);
+					}
+				});
+				return results;
+			},
+			populateUserList(){
+				var visibleUsers = util.getVisibleMarkers();
+				$('#user-results').html('');
+				$.each(visibleUsers, function(index, value){
+					var name = value.users[0].firstName + ' ' + value.users[0].lastName;
+					$('#user-results').append('' +
+					'<div class="user-box">' +
+						'<div class="user-picture">' +
+							'<img src="images/default-user.png">' +
+						'</div>' +
+						'<div class="user-info">' +
+							'<h3 class="user-info-title">' + name + ' (mgriner@udel.edu)</h3>' +
+							'<div class="user-info-details">Marketing</div>' +
+							'<div class="user-info-details">610-555-5555</div>' +
+						'</div>' +
+					'</div>');
+				});
+			},
 			onEachFeature: function(feature, layer){
-				// does this feature have a property named popupContent?
-				if (feature.properties && feature.properties.popupContent) {
-					layer.bindPopup(feature.properties.popupContent);
-					
-					var name = feature.properties.name;
-					var office;
+				if(feature.users.length > 0){
+					$.each(feature.users, function(index, user){
+						var name, office, email, location, phone;
+						name = user.firstName + ' ' + user.lastName;
 						if(feature.properties.office==1){
 							office =  'Conshohocken';
 						}
 						else if(feature.properties.office==2){
 							office = 'San Diego';
 						}
-					var location = feature.properties.location;
-					var email = feature.properties.email;
-					var phone = feature.properties.phone;
-					
-					var userTable ='' +
+						email = user.email;
+						location = user.city;
+						phone = user.department;
+						
+						feature.properties.popupContent = '<p><span class="glyphicon glyphicon-user"></span>' +
+						'<strong>' + name + '</strong></p><p>' + email + '</p>';
+						
+						layer.bindPopup(feature.properties.popupContent);
+						
+						var userTable ='' +
 							'<div class="table-responsive">' +
 								'<table class="table table-condensed">' +
 								  '<tr>' +
@@ -250,34 +305,41 @@
 					layer.on('click', function(e){
 						this.clicked = true;
 						this.openPopup();
-						document.getElementById('userInfo').innerHTML = userTable;
+						$('#userInfo').html(userTable);
 					});
 					
 					// unset clicked flag so mouseout works properly after a click event
 					layer.on('popupclose', function(e){
 						this.clicked = false;
-						document.getElementById('userInfo').innerHTML = '';
+						$('#userInfo').html('');
 					});
 					
 					layer.on('mouseover', function(e){
 						this.openPopup();
-						document.getElementById('userInfo').innerHTML = userTable;
+						$('#userInfo').html(userTable);
 					});
 					
 					layer.on('mouseout', function(e){
 						if(!this.clicked){
 							this.closePopup();
-							document.getElementById('userInfo').innerHTML = '';
+							$('#userInfo').html('');
 						}
 					});
 					
 					layer.on('contextmenu', function(e){
 						//alert("Delete?");
 					});
+					});
 				}
 			},
 			pointToLayer: function(feature, latlng){
-				return L.marker(latlng, {icon: util.geojsonMarkerOptions});
+				console.log(feature);
+				console.log(latlng);
+				var marker = L.marker(latlng, {icon: util.geojsonMarkerOptions});
+				var office = buildings.getOffice(feature.properties.office);
+				console.log(office);
+				office.floorList[feature.properties.level - 1].markers.push(marker);
+				return marker;
 			}
 		};
 		
@@ -290,6 +352,9 @@
 			changeOfficeLayer: layers.changeOfficeLayer,
 			refreshLayer: layers.refreshLayer,
 			createSearchLayers: layers.createSearchLayers,
+			getMap: map.getMap,
+			getVisibleMarkers: util.getVisibleMarkers,
+			populateUserList: util.populateUserList,
 		};
 	}
 })(jQuery);

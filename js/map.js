@@ -13,12 +13,5 @@ $('document').ready(function(){
 	
 	var controller = $.mapController();
 	controller.init(map);
-	
-	var cache;
-	controller.getData(function(data){
-		map.createLayers(data);
-		map.changeOfficeLayer(1);
-		cache = data;
-	});
 });
 
