@@ -12,6 +12,6 @@ $('document').ready(function(){
 	map.addFloor(2, 1, 'images/office2Level1.png');
 	
 	var controller = $.mapController();
-	controller.init(map);
+	controller.init(map, 'data/userData.json', 'data/data.json');
 });
 

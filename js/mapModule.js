@@ -4,6 +4,7 @@
 		var globals = {
 			mapObject: {},
 			currentOffice: -1,
+			currentFloor: -1,
 			officeList: [],
 			activeLayers: [],
 			levelControl: {},
