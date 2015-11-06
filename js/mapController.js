@@ -5,8 +5,8 @@
 			options: $.extend({
 			}, options),
 			init: function(map){
-				controller.getData('js/userData.json', function(userData){
-					controller.getData('js/data.json', function(mapData){
+				controller.getData('data/userData.json', function(userData){
+					controller.getData('data/data.json', function(mapData){
 						$.each(userData, function(switchKey, switchValue){
 							$.each(switchValue.ports, function(portKey, portValue){
 								 console.log('key: ' + switchKey + ' port ' + portKey);
