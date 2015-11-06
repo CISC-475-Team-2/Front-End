@@ -34,6 +34,10 @@
 					});
 				});
 				
+				$('#search-input').on('input', function(event){
+					$('#search-form').submit();
+				});
+				
 				$('#search-form').submit(function(event){
 					event.preventDefault();
 					
