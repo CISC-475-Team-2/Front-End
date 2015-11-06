@@ -1,12 +1,13 @@
 (function($) {
 	$.mapModule = function(options){
-		var mapObject;
 		
-		var currentOffice;
-		var currentFloor;
-		var officeList = [];
-		var activeLayers = [];
-		var levelControl;
+		var globals = {
+			mapObject: {},
+			currentOffice: -1,
+			officeList: [],
+			activeLayers: [],
+			levelControl: {},
+		}
 		
 		var map = {
 			options: $.extend({
@@ -17,31 +18,32 @@
 				imageBounds: [[49.41873, 8.67689], [49.41973, 8.67959]],
 				initialOffice: 1,
 				initialFloor: 1,
+				exposedForTesting: false,
 			}, options),
 			init: function(){
-				mapObject = new L.Map('map', {
+				globals.mapObject = new L.Map('map', {
 						center: map.options.center,
 						zoom: map.options.zoom,
 						minZoom: map.options.minZoom,
 						maxZoom: map.options.maxZoom
 				});
 				
-				currentOffice = map.options.initialOffice;
-				currentFloor = map.options.initialFloor;
+				globals.currentOffice = map.options.initialOffice;
+				globals.currentFloor = map.options.initialFloor;
 				
 				layers.createLayers({type:"FeatureCollection", "features":[]});
 			},
 			getMap(){
-				return mapObject;
+				return globals.mapObject;
 			}
 		};
 		
 		var buildings = {
 			getOfficeList(){
-				return officeList;
+				return globals.officeList;
 			},
 			getOffice: function(officeNum){
-				var results = $.grep(officeList, function(e){ return e.id === officeNum });
+				var results = $.grep(globals.officeList, function(e){ return e.id === officeNum });
 				if(results.length == 0){
 					// office doesn't exist
 					return undefined;
@@ -79,7 +81,7 @@
 			},
 			addOffice: function(officeNum, officeName){
 				if(buildings.getOffice(officeNum, officeName) === undefined){
-					officeList.push({
+					globals.officeList.push({
 						'id': officeNum,
 						'name' : officeName,
 						'floorList': []
@@ -95,7 +97,7 @@
 				if(office != undefined){
 					var floor = buildings.getFloor(office, floorNum);
 					if(floor === undefined){
-						var overlay = L.imageOverlay(imageURL, map.options.imageBounds).addTo(mapObject);
+						var overlay = L.imageOverlay(imageURL, map.options.imageBounds).addTo(globals.mapObject);
 						office.floorList.push({'floor': floorNum, 'url': imageURL, 'image': overlay, 'markers': []});
 					}
 					else{
@@ -110,8 +112,8 @@
 		
 		var controls = {
 			removeLevelControl: function(){
-				if(levelControl != undefined){
-					levelControl.removeFrom(mapObject);
+				if(globals.levelControl != undefined && !$.isEmptyObject(globals.levelControl)){
+					globals.levelControl.removeFrom(globals.mapObject);
 				}
 			},
 			addLevelControl: function(officeNum, floorNum){
@@ -120,16 +122,16 @@
 				}
 				controls.removeLevelControl();
 				var office = buildings.getOffice(officeNum);
-				levelControl = new L.Control.Level({
+				globals.levelControl = new L.Control.Level({
 					level: '1',
 					levels: controls.getLevels(officeNum)
 				});
-				levelControl.setLevel(floorNum);
-				levelControl.addEventListener('levelchange', office.layer.setLevel, office.layer);
-				levelControl.addEventListener('levelchange', function(e){buildings.getFloor(currentOffice, e.newLevel).image.bringToFront()});
-				levelControl.addEventListener('levelchange', function(e){currentFloor = e.newLevel});
-				levelControl.addEventListener('levelchange', function(e){util.populateUserList()});
-				levelControl.addTo(mapObject);
+				globals.levelControl.setLevel(floorNum);
+				globals.levelControl.addEventListener('levelchange', office.layer.setLevel, office.layer);
+				globals.levelControl.addEventListener('levelchange', function(e){buildings.getFloor(globals.currentOffice, e.newLevel).image.bringToFront()});
+				globals.levelControl.addEventListener('levelchange', function(e){globals.currentFloor = e.newLevel});
+				globals.levelControl.addEventListener('levelchange', function(e){util.populateUserList()});
+				globals.levelControl.addTo(globals.mapObject);
 			},
 			getLevels(officeNum){
 				var levels = [];
@@ -143,7 +145,7 @@
 		
 		var layers = {
 			createLayers: function(data){
-				$.each(officeList, function(index, office){
+				$.each(globals.officeList, function(index, office){
 					$.each(office.floorList, function(index, floor){
 						if(floor.markers){
 							floor.markers = [];
@@ -164,13 +166,13 @@
 				});
 			},
 			createSearchLayers: function(data, searchString){
-				$.each(officeList, function(index, office){
+				$.each(globals.officeList, function(index, office){
 					$.each(office.floorList, function(index, floor){
 						if(floor.markers){
 							floor.markers = [];
 						}
 					});
-					mapObject.removeLayer(office.layer);
+					globals.mapObject.removeLayer(office.layer);
 					office.layer = new L.Indoor(data, {
 						onEachFeature: util.onEachFeature,
 						pointToLayer: util.pointToLayer,
@@ -194,30 +196,30 @@
 				});
 			},
 			refreshLayer: function (){
-				var layer = buildings.getOffice(currentOffice).layer;
+				var layer = buildings.getOffice(globals.currentOffice).layer;
 				layers.clearLayers();
-				layer.setLevel(currentFloor);
-				layer.addTo(mapObject);
-				activeLayers.push(layer);
-				controls.addLevelControl(currentOffice, currentFloor);
+				layer.setLevel(globals.currentFloor);
+				layer.addTo(globals.mapObject);
+				globals.activeLayers.push(layer);
+				controls.addLevelControl(globals.currentOffice, globals.currentFloor);
 			},
 			clearLayers: function(){
-				$.each(activeLayers, function(index, value){
-					mapObject.removeLayer(value);
-					activeLayers.pop(value);
+				$.each(globals.activeLayers, function(index, value){
+					globals.mapObject.removeLayer(value);
+					globals.activeLayers.pop(value);
 				});
 			},
 			changeOfficeLayer: function(officeNum){
 				var layer = buildings.getOffice(officeNum).layer;
 				layers.clearLayers();
-				layer.addTo(mapObject);
-				activeLayers.push(layer);
+				layer.addTo(globals.mapObject);
+				globals.activeLayers.push(layer);
 				layer.setLevel(1);
 				//buildings.changeFloor(officeNum, 1);
 				buildings.getFloor(officeNum, 1).image.bringToFront();
-				currentFloor = 1;
+				globals.currentFloor = 1;
 				controls.addLevelControl(officeNum);
-				currentOffice = officeNum;
+				globals.currentOffice = officeNum;
 			},
 		};
 		
@@ -230,8 +232,8 @@
 				html: ''
 			}),
 			getVisibleMarkers(){
-				var markers = buildings.getOffice(currentOffice).floorList[currentFloor - 1].markers;
-				var bounds = mapObject.getBounds();
+				var markers = buildings.getOffice(globals.currentOffice).floorList[globals.currentFloor - 1].markers;
+				var bounds = globals.mapObject.getBounds();
 				console.log(markers);
 				console.log(bounds);
 				var results = [];
@@ -340,21 +342,71 @@
 				console.log(office);
 				office.floorList[feature.properties.level - 1].markers.push(marker);
 				return marker;
+			},
+			getGlobals: function(){
+				var globals = {
+					
+				}
 			}
 		};
 		
-		return {
-			init: map.init,
-			addOffice: buildings.addOffice,
-			addFloor: buildings.addFloor,
-			getOfficeList: buildings.getOfficeList,
-			createLayers: layers.createLayers,
-			changeOfficeLayer: layers.changeOfficeLayer,
-			refreshLayer: layers.refreshLayer,
-			createSearchLayers: layers.createSearchLayers,
-			getMap: map.getMap,
-			getVisibleMarkers: util.getVisibleMarkers,
-			populateUserList: util.populateUserList,
-		};
+		if(!map.options.exposedForTesting){
+			return {
+				init: map.init,
+				addOffice: buildings.addOffice,
+				addFloor: buildings.addFloor,
+				getOfficeList: buildings.getOfficeList,
+				createLayers: layers.createLayers,
+				changeOfficeLayer: layers.changeOfficeLayer,
+				refreshLayer: layers.refreshLayer,
+				createSearchLayers: layers.createSearchLayers,
+				getMap: map.getMap,
+				getVisibleMarkers: util.getVisibleMarkers,
+				populateUserList: util.populateUserList,
+			};
+		}
+		else if(map.options.exposedForTesting){
+			return {
+				// globals
+				mapObject: globals.mapObject,
+				currentOffice: globals.currentOffice,
+				currentFloor: globals.currentFloor,
+				officeList: globals.officeList,
+				activeLayers: globals.activeLayers,
+				levelControl: globals.levelControl,
+				
+				// map
+				options: map.options,
+				init: map.init,
+				getMap: map.getMap,
+				
+				// buildings
+				getOfficeList: buildings.getOfficeList,
+				getOffice: buildings.getOffice,
+				getFloor: buildings.getFloor,
+				addOffice: buildings.addOffice,
+				addFloor: buildings.addFloor,
+				
+				// controls
+				removeLevelControl: controls.removeLevelControl,
+				addLevelControl: controls.addLevelControl,
+				getLevels: controls.getLevels,
+				
+				// layers
+				createLayers: layers.createLayers,
+				createSearchLayers: layers.createSearchLayers,
+				refreshLayer: layers.refreshLayer,
+				clearLayers: layers.clearLayers,
+				changeOfficeLayer: layers.changeOfficeLayer,
+				
+				// util
+				geojsonMarkerOptions: util.geojsonMarkerOptions,
+				getVisibleMarkers: util.getVisibleMarkers,
+				populateUserList: util.populateUserList,
+				onEachFeature: util.onEachFeature,
+				pointToLayer: util.pointToLayer,
+				
+			};
+		}
 	}
 })(jQuery);
