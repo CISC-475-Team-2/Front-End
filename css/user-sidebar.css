@@ -79,6 +79,7 @@
     box-sizing: border-box;
     min-height: 112px;
     padding: 10px 18px 10px 24px;
+	white-space: nowrap;
 }
 
 .user-picture {

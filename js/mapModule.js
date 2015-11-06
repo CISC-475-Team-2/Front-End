@@ -278,8 +278,17 @@
 						location = user.city;
 						phone = user.department;
 						
-						feature.properties.popupContent = '<p><span class="glyphicon glyphicon-user"></span>' +
-						'<strong>' + name + '</strong></p><p>' + email + '</p>';
+						feature.properties.popupContent = '' +
+					'<div class="user-box">' +
+						'<div class="user-picture">' +
+							'<img src="images/default-user.png">' +
+						'</div>' +
+						'<div class="user-info">' +
+							'<h3 class="user-info-title">' + name + ' (mgriner@udel.edu)</h3>' +
+							'<div class="user-info-details">Marketing</div>' +
+							'<div class="user-info-details">610-555-5555</div>' +
+						'</div>' +
+					'</div>'
 						
 						layer.bindPopup(feature.properties.popupContent);
 						
@@ -323,8 +332,8 @@
 					
 					layer.on('mouseout', function(e){
 						if(!this.clicked){
-							this.closePopup();
-							$('#userInfo').html('');
+							//this.closePopup();
+							//$('#userInfo').html('');
 						}
 					});
 					
