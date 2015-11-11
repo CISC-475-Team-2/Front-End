@@ -182,10 +182,17 @@
 								var found = false;
 								$.each(feature.users, function(index, user){
 									var name = user.firstName + ' ' + user.lastName;
+                                    var dept = user.department;
 									if(name.toLowerCase().trim().indexOf(searchString) > -1){
 										found = true;
 										return;
 									}
+                                    //possible change, messes a bit with found
+                                    if(dept.toLowerCase().trim().indexOf(searchString) > -1){
+										found = true;
+										return;
+									}
+                                    
 								});
 								if(found){
 									return true;
