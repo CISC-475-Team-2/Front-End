@@ -262,22 +262,24 @@
 					var email = value.users[0].email;
 					var phone = value.users[0].phone;
 					$('#user-results').append('' +
-					'<div class="user-box">' +
-						'<div class="user-picture">' +
-							'<img src="images/default-user.png">' +
-						'</div>' +
-						'<div class="user-info">' +
-							'<h3 class="user-info-title">' + name + ' (' + email + ')</h3>' +
-							'<div class="user-info-details">' + dept + '</div>' +
-							'<div class="user-info-details">' + phone + '</div>' +
-						'</div>' +
+					'<div class="user-container">' +
+						'<div class="user-box">' +
+							'<div class="user-picture">' +
+								'<img src="images/default-user.png">' +
+							'</div>' +
+							'<div class="user-info">' +
+								'<h3 class="user-info-title">' + name + ' (' + email + ')</h3>' +
+								'<div class="user-info-details">' + dept + '</div>' +
+								'<div class="user-info-details">' + phone + '</div>' +
+							'</div>' +
+						'</div>' + 
 					'</div>');
 				});
 			},
 			onEachFeature: function(feature, layer){
 				if(feature.users.length > 0){
 					$.each(feature.users, function(index, user){
-						var name, office, email, location, phone;
+						var name, department, office, email, location, phone;
 						name = user.firstName + ' ' + user.lastName;
 						if(feature.properties.office==1){
 							office =  'Conshohocken';
@@ -285,21 +287,24 @@
 						else if(feature.properties.office==2){
 							office = 'San Diego';
 						}
+						department = user.department;
 						email = user.email;
 						location = user.city;
-						phone = user.department;
+						phone = user.phone;
 						
 						feature.properties.popupContent = '' +
-					'<div class="user-box">' +
-						'<div class="user-picture">' +
-							'<img src="images/default-user.png">' +
-						'</div>' +
-						'<div class="user-info">' +
-							'<h3 class="user-info-title">' + name + ' (mgriner@udel.edu)</h3>' +
-							'<div class="user-info-details">Marketing</div>' +
-							'<div class="user-info-details">610-555-5555</div>' +
-						'</div>' +
-					'</div>'
+						'<div class="user-container">' +
+							'<div class="user-box">' +
+								'<div class="user-picture">' +
+									'<img src="images/default-user.png">' +
+								'</div>' +
+								'<div class="user-info">' +
+									'<h3 class="user-info-title">' + name + ' (' + email + ')</h3>' +
+									'<div class="user-info-details">' + department + '</div>' +
+									'<div class="user-info-details">' + phone + '</div>' +
+								'</div>' +
+							'</div>' +
+						'</div>';
 						
 						layer.bindPopup(feature.properties.popupContent);
 						

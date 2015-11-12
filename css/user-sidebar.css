@@ -107,3 +107,7 @@
     display: table-cell;
     width: 100%;
 }
+
+.leaflet-popup-content{
+	width: auto!important;
+}
