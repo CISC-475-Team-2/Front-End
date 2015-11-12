@@ -46,15 +46,15 @@
 
 /*override .leaflet-left so it doesn't overlap sidebar button*/
 .leaflet-left{
-	left:23px!important;
+	left:423px!important;
 	-webkit-transition: left .4s ease;
     -moz-transition: left .4s ease;
     -o-transition: left .4s ease;
     transition: left .4s ease;
 }
 
-.leaflet-left.shift-right{
-	left:423px!important;
+.leaflet-left.collapsed{
+	left:23px!important;
 }
 
 #user-panel-inner{

@@ -57,7 +57,7 @@
 					var selector = $(this).data('target');
 					var selector2 = $(this).data('target2');
 					$(selector).toggleClass('collapsed');
-					$(selector2).toggleClass('shift-right');
+					$(selector2).toggleClass('collapsed');
 					if($(selector).hasClass('collapsed')){
 						$(this).html('<span class="glyphicon glyphicon-triangle-right"></span>');
 					}
