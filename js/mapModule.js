@@ -259,15 +259,17 @@
 				$.each(visibleUsers, function(index, value){
 					var name = value.users[0].firstName + ' ' + value.users[0].lastName;
                     var dept = value.users[0].department;
+					var email = value.users[0].email;
+					var phone = value.users[0].phone;
 					$('#user-results').append('' +
 					'<div class="user-box">' +
 						'<div class="user-picture">' +
 							'<img src="images/default-user.png">' +
 						'</div>' +
 						'<div class="user-info">' +
-							'<h3 class="user-info-title">' + name + ' (mgriner@udel.edu)</h3>' +
+							'<h3 class="user-info-title">' + name + ' (' + email + ')</h3>' +
 							'<div class="user-info-details">' + dept + '</div>' +
-							'<div class="user-info-details">610-555-5555</div>' +
+							'<div class="user-info-details">' + phone + '</div>' +
 						'</div>' +
 					'</div>');
 				});
