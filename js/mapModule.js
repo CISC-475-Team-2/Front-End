@@ -248,7 +248,7 @@
 				$.each(markers, function(key, value){
 					if(bounds.contains(value._latlng)){
 						console.log(value.feature.users[0].firstName);
-						results.push(value.feature);
+						results.push(value);
 					}
 				});
 				return results;
@@ -257,23 +257,66 @@
 				var visibleUsers = util.getVisibleMarkers();
 				$('#user-results').html('');
 				$.each(visibleUsers, function(index, value){
-					var name = value.users[0].firstName + ' ' + value.users[0].lastName;
-                    var dept = value.users[0].department;
-					var email = value.users[0].email;
-					var phone = value.users[0].phone;
+					var user = value.feature.users[0];
+					var name = user.firstName + ' ' + user.lastName;
+					var id = user.id;
+                    var dept = user.department;
+					var email = user.email;
+					var phone = user.phone;
 					$('#user-results').append('' +
-					'<div class="user-container">' +
+					'<div id="user-' + id + '" class="user-container">' +
 						'<div class="user-box">' +
 							'<div class="user-picture">' +
 								'<img src="images/default-user.png">' +
 							'</div>' +
 							'<div class="user-info">' +
-								'<h3 class="user-info-title">' + name + ' (' + email + ')</h3>' +
+								'<h3 class="user-info-title">' + name +
+									' (<a href="mailto:' + email + '">' + email + '</a>)</h3>' +
 								'<div class="user-info-details">' + dept + '</div>' +
 								'<div class="user-info-details">' + phone + '</div>' +
 							'</div>' +
 						'</div>' + 
 					'</div>');
+					
+					if(value.feature.properties.clicked || value.feature.properties.hover){
+						$('#user-' + id).css('background-color', '#333');
+						value.setIcon(new L.Icon.Default());
+					}
+					
+					if(!value.feature.properties.clicked && !value.feature.properties.hover){
+						$('#user-' + id).css('background-color', '#222');
+						value.setIcon(util.geojsonMarkerOptions);
+					}
+					
+					$('#user-' + id).hover(
+						function(event){
+							value.setIcon(new L.Icon.Default());
+							value.openPopup();
+							$('#user-' + id).css('background-color', '#333');
+						},
+						function(event){
+							if(!value.feature.properties.clicked){
+								value.setIcon(util.geojsonMarkerOptions);
+								value.closePopup();
+								$('#user-' + id).css('background-color', '#222');
+							}
+						}
+					);
+					
+					$('#user-' + id).click(function(event){
+						if(!value.feature.properties.clicked){
+							value.setIcon(new L.Icon.Default());
+							value.openPopup();
+							$('#user-' + id).css('background-color', '#333');
+							value.feature.properties.clicked = true;
+						}
+						else{
+							value.feature.properties.clicked = false;
+							value.setIcon(util.geojsonMarkerOptions);
+							value.closePopup();
+							$('#user-' + id).css('background-color', '#222');
+						}
+					});
 				});
 			},
 			onEachFeature: function(feature, layer){
@@ -328,34 +371,40 @@
 								'</table>' +
 							'</div>';
 					
-					// if clicked open popup but also set a flag so mouseout doesn't close popup
-					layer.on('click', function(e){
-						this.clicked = true;
-						this.openPopup();
-						$('#userInfo').html(userTable);
-					});
-					
-					// unset clicked flag so mouseout works properly after a click event
-					layer.on('popupclose', function(e){
-						this.clicked = false;
-						$('#userInfo').html('');
-					});
-					
-					layer.on('mouseover', function(e){
-						this.openPopup();
-						$('#userInfo').html(userTable);
-					});
-					
-					layer.on('mouseout', function(e){
-						if(!this.clicked){
-							//this.closePopup();
-							//$('#userInfo').html('');
-						}
-					});
-					
-					layer.on('contextmenu', function(e){
-						//alert("Delete?");
-					});
+						// if clicked open popup but also set a flag so mouseout doesn't close popup
+						layer.on('click', function(e){
+							if(this.feature.properties.clicked){
+								this.feature.properties.clicked = false;
+								this.closePopup();
+							}
+							else{
+								this.feature.properties.clicked = true;
+								this.openPopup();
+							}
+							util.populateUserList();
+							$('#userInfo').html(userTable);
+						});
+						
+						// unset clicked flag so mouseout works properly after a click event
+						layer.on('popupclose', function(e){
+							$('#userInfo').html('');
+						});
+						
+						layer.on('mouseover', function(e){
+							this.openPopup();
+							if(!this.feature.properties.clicked){
+								this.feature.properties.hover = true;
+								util.populateUserList();
+							}
+							$('#userInfo').html(userTable);
+						});
+						
+						layer.on('mouseout', function(e){
+							if(this.feature.properties.hover){
+								this.feature.properties.hover = false;
+								util.populateUserList();
+							}
+						});
 					});
 				}
 			},

@@ -67,7 +67,6 @@
 				});
 				
 				map.getMap().on('move', function(event){
-					map.getVisibleMarkers();
 					map.populateUserList();
 				});
 			},
