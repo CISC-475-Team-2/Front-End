@@ -5,8 +5,6 @@
 				"firstName":"John",
 				"lastName":"Doe",
 				"userName":"jdoe",
-				"id": 1,
-				"phone": "6105555555",
 				"city":"Newark",
 				"department":"IT",
 				"email":"jdoe@email.com"
@@ -15,8 +13,6 @@
 				"firstName":"Jane",
 				"lastName":"Doe",
 				"userName":"doej",
-				"id": 2,
-				"phone": "6105555555",
 				"city":"Newark",
 				"department":"Marketing",
 				"email":"doej@email.com"
@@ -29,8 +25,6 @@
 				"firstName":"Ryan",
 				"lastName":"Serva",
 				"userName":"rserva",
-				"id": 3,
-				"phone": "6105555555",
 				"city":"Newark",
 				"department":"Software",
 				"email":"rserva@email.com"
