@@ -16,7 +16,8 @@
 				zoom: 19,
 				minZoom:18,
 				maxZoom: 22,
-				imageBounds: [[49.41873, 8.67689], [49.41973, 8.67959]],
+				//imageBounds: [[49.41873, 8.67689], [49.41973, 8.67959]],
+				//imageBoudns2: [[49.41873, 8.67689], [49.41973, 8.68073]],
 				initialOffice: 1,
 				initialFloor: 1,
 				exposedForTesting: false,
@@ -93,12 +94,12 @@
 					throw 'The office with id: ' + officeNum + ' already exists.';
 				}
 			},
-			addFloor: function(officeNum, floorNum, imageURL){
+			addFloor: function(officeNum, floorNum, imageURL, imageBounds){
 				var office = buildings.getOffice(officeNum);
 				if(office != undefined){
 					var floor = buildings.getFloor(office, floorNum);
 					if(floor === undefined){
-						var overlay = L.imageOverlay(imageURL, map.options.imageBounds).addTo(globals.mapObject);
+						var overlay = L.imageOverlay(imageURL, imageBounds, {opacity:0}).addTo(globals.mapObject);
 						office.floorList.push({'floor': floorNum, 'url': imageURL, 'image': overlay, 'markers': []});
 					}
 					else{
@@ -129,7 +130,11 @@
 				});
 				globals.levelControl.setLevel(floorNum);
 				globals.levelControl.addEventListener('levelchange', office.layer.setLevel, office.layer);
-				globals.levelControl.addEventListener('levelchange', function(e){buildings.getFloor(globals.currentOffice, e.newLevel).image.bringToFront()});
+				globals.levelControl.addEventListener('levelchange', function(e){
+					buildings.getFloor(globals.currentOffice, globals.currentFloor).image.setOpacity(0);
+					buildings.getFloor(globals.currentOffice, e.newLevel).image.bringToFront()
+					buildings.getFloor(globals.currentOffice, e.newLevel).image.setOpacity(1.0);
+				});
 				globals.levelControl.addEventListener('levelchange', function(e){globals.currentFloor = e.newLevel});
 				globals.levelControl.addEventListener('levelchange', function(e){util.populateUserList()});
 				globals.levelControl.addTo(globals.mapObject);
@@ -224,7 +229,9 @@
 				globals.activeLayers.push(layer);
 				layer.setLevel(1);
 				//buildings.changeFloor(officeNum, 1);
+				buildings.getFloor(globals.currentOffice, globals.currentFloor).image.setOpacity(0);
 				buildings.getFloor(officeNum, 1).image.bringToFront();
+				buildings.getFloor(officeNum, 1).image.setOpacity(1.0);
 				globals.currentFloor = 1;
 				controls.addLevelControl(officeNum);
 				globals.currentOffice = officeNum;

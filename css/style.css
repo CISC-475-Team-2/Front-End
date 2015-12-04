@@ -16,3 +16,7 @@ html, body, #map {
 .btn-group.leaflet-control {
 	clear: none;
 }
+
+.leaflet-container img.leaflet-image-layer {
+    background-color: #FFF;
+}
