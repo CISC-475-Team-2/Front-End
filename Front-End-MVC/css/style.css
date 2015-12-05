@@ -1,0 +1,34 @@
+body {
+	padding-bottom:140px;
+    margin: 0;
+}
+
+html, body, #map {
+    height: 100%;
+}
+
+.map-marker{
+	background-color:blue;
+	border-radius:50%;
+	opacity:.85;
+}
+
+.btn-group.leaflet-control {
+	clear: none;
+}
+
+.leaflet-container img.leaflet-image-layer {
+    background-color: #FFF;
+}
+
+#notificationArea {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100000;
+}
+
+#notificationArea div {
+    margin: 0 auto;
+}
