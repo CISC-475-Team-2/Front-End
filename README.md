@@ -1,2 +1,2 @@
 # Front-End-MVC
-Temporary repo for MVC testing
+Repo for the front end code
