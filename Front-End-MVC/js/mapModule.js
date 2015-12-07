@@ -18,8 +18,6 @@
                 zoom: 19,
                 minZoom: 18,
                 maxZoom: 22,
-                //imageBounds: [[49.41873, 8.67689], [49.41973, 8.67959]],
-                //imageBoudns2: [[49.41873, 8.67689], [49.41973, 8.68073]],
                 initialOffice: 1,
                 initialFloor: 1,
                 exposedForTesting: false,
@@ -237,7 +235,6 @@
                 layer.addTo(globals.mapObject);
                 globals.activeLayers.push(layer);
                 layer.setLevel(1);
-                //buildings.changeFloor(officeNum, 1);
                 buildings.getFloor(globals.currentOffice, globals.currentFloor).image.setOpacity(0);
                 buildings.getFloor(officeNum, 1).image.bringToFront();
                 buildings.getFloor(officeNum, 1).image.setOpacity(1.0);
@@ -284,7 +281,7 @@
 				        id = user.id,
 				        dept = user.department,
 				        email = user.email,
-				        phone = user.phone;
+				        city = user.city;
 
                         $('#user-results').append('' +
                         '<div id="user-' + id + '" class="user-container">' +
@@ -297,7 +294,7 @@
                                     '<h3 class="user-info-title"><a href="http://whois/Default/Profile?employeeId=' + id + '">' + name + '</a>' +
                                         ' (<a href="mailto:' + email + '">' + email + '</a>)</h3>' +
                                     '<div class="user-info-details">' + dept + '</div>' +
-                                    '<div class="user-info-details">' + phone + '</div>' +
+                                    '<div class="user-info-details">' + city + '</div>' +
                                 '</div>' +
                             '</div>' +
                         '</div>');
@@ -350,18 +347,11 @@
                 var userTable;
                 if (feature.users.length > 0) {
                     $.each(feature.users, function (index, user) {
-                        var name, department, office, email, location, phone;
+                        var name, dept, city, email, location;
                         name = user.firstName + ' ' + user.lastName;
-                        if (feature.properties.office == 1) {
-                            office = 'Conshohocken';
-                        }
-                        else if (feature.properties.office == 2) {
-                            office = 'San Diego';
-                        }
-                        department = user.department;
+                        dept = user.department;
                         email = user.email;
-                        location = user.city;
-                        phone = user.phone;
+                        city = user.city;
                         id = user.id;
 
                         feature.properties.popupContent = '' +
@@ -374,8 +364,8 @@
 								'<div class="user-info">' +
 									'<h3 class="user-info-title"><a href="http://whois/Default/Profile?employeeId=' + id + '">' + name + '</a>' +
 									    ' (<a href="mailto:' + email + '">' + email + '</a>)</h3>' +
-									'<div class="user-info-details">' + department + '</div>' +
-									'<div class="user-info-details">' + phone + '</div>' +
+									'<div class="user-info-details">' + dept + '</div>' +
+									'<div class="user-info-details">' + city + '</div>' +
 								'</div>' +
 							'</div>' +
 						'</div>';
@@ -385,17 +375,15 @@
 								'<table class="table table-condensed">' +
 								  '<tr>' +
 									'<th>Name</th>' +
-									'<th>Office</th> ' +
-									'<th>Physical Location</th>' +
-									'<th>Email</th>' +
-									'<th>Phone</th>' +
+                                    '<th>Email</th>' +
+									'<th>Department</th> ' +
+									'<th>Location</th>' +
 								  '</tr>' +
 								  '<tr>' +
 									'<td>' + name + '</td>' +
-									'<td>' + office + '</td> ' +
-									'<td>' + location + '</td>' +
-									'<td>' + email + '</td>' +
-									'<td>' + phone + '</td>' +
+									'<td>' + email + '</td> ' +
+									'<td>' + dept + '</td>' +
+									'<td>' + city + '</td>' +
 								  '</tr>' +
 								'</table>' +
 							'</div>';
