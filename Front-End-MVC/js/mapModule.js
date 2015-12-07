@@ -281,11 +281,17 @@
 				        id = user.id,
 				        dept = user.department,
 				        email = user.email,
-				        city = user.city;
+				        city = user.city,
+				        switchPort = '';
+
+                        if (SEATINGCHARTGLOBALS.adminMode) {
+                            switchPort = '<br><strong>Switch: ' + value.feature.properties.switchName + ' Port: ' + value.feature.properties.port + '</strong>';
+                        }
 
                         $('#user-results').append('' +
                         '<div id="user-' + id + '" class="user-container">' +
                             '<div class="user-box">' +
+                                '<div class="user-info-details">' + switchPort + '</div>' +
                                 '<div class="user-picture">' +
                                     //'<img src = "http://whois/Default/Thumbnail?employeeId="' + id + '>' +  // replace below default with this when go live
                                     '<img src="Content/Images/default-user.png">' +
@@ -344,7 +350,7 @@
                 });
             },
             onEachFeature: function (feature, layer) {
-                var userTable;
+                var userTable, id;
                 if (feature.users.length > 0) {
                     $.each(feature.users, function (index, user) {
                         var name, dept, city, email, location;
@@ -352,11 +358,17 @@
                         dept = user.department;
                         email = user.email;
                         city = user.city;
-                        id = user.id;
+                        id = user.id,
+                        switchPort = '';
+
+                        if (SEATINGCHARTGLOBALS.adminMode) {
+                            switchPort = '<br><strong>Switch: ' + feature.properties.switchName + ' Port: ' + feature.properties.port + '</strong>';
+                        }
 
                         feature.properties.popupContent = '' +
 						'<div class="user-container">' +
 							'<div class="user-box">' +
+                                '<div class="user-info-details">' + switchPort + '</div>' +
 								'<div class="user-picture">' +
                                     //'<img src = "http://whois/Default/Thumbnail?employeeId="' + id + '>' +  // replace below default with this when go live
 									'<img src="Content/Images/default-user.png">' +
@@ -390,9 +402,16 @@
                     });
                 }
                 else {
+                    id = feature.properties.switchName + '' + feature.properties.port;
+                    var switchPort = '';
+
+                    if (SEATINGCHARTGLOBALS.adminMode) {
+                        switchPort = '<br><strong>Switch: ' + feature.properties.switchName + ' Port: ' + feature.properties.port + '</strong>';
+                    }
                     feature.properties.popupContent = '' +
 						        '<div class="user-container">' +
 							        '<div class="user-box">' +
+                                        '<div class="user-info-details">' + switchPort + '</div>' +
 								        '<div class="user-picture">' +
 				    //'<img src = "http://whois/Default/Thumbnail?employeeId="' + id + '>' +  // replace below default with this when go live
 									        '<img src="Content/Images/default-user.png">' +
