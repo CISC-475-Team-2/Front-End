@@ -1,40 +1,36 @@
-{
+"{
 	"emaswitch00":{
-		"ports":{
-			"A1":{
-				"firstName":"John",
-				"lastName":"Doe",
-				"userName":"jdoe",
-				"id": 1,
-				"phone": "6105555555",
-				"city":"Newark",
-				"department":"IT",
-				"email":"jdoe@email.com"
-			},
-			"A2":{
-				"firstName":"Jane",
-				"lastName":"Doe",
-				"userName":"doej",
-				"id": 2,
-				"phone": "6105555555",
-				"city":"Newark",
-				"department":"Marketing",
-				"email":"doej@email.com"
-			}
+		"A1":{
+			"firstName":"John",
+			"lastName":"Doe",
+			"userName":"jdoe",
+			"id": 1,
+			"phone": "6105555555",
+			"city":"Newark",
+			"department":"IT",
+			"email":"jdoe@email.com"
+		},
+		"A2":{
+			"firstName":"Jane",
+			"lastName":"Doe",
+			"userName":"doej",
+			"id": 2,
+			"phone": "6105555555",
+			"city":"Newark",
+			"department":"Marketing",
+			"email":"doej@email.com"
 		}
 	},
 	"emaswitch01":{
-		"ports":{
-			"B1":{
-				"firstName":"Ryan",
-				"lastName":"Serva",
-				"userName":"rserva",
-				"id": 3,
-				"phone": "6105555555",
-				"city":"Newark",
-				"department":"Software",
-				"email":"rserva@email.com"
-			}
+		"B1":{
+			"firstName":"Ryan",
+			"lastName":"Serva",
+			"userName":"rserva",
+			"id": 3,
+			"phone": "6105555555",
+			"city":"Newark",
+			"department":"Software",
+			"email":"rserva@email.com"
 		}
 	}
-}
+}"

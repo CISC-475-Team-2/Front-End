@@ -12,7 +12,7 @@ namespace Front_End_MVC
                         "~/js/jquery.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/libs/bootstrap/js/bootstrap.js"));
+                      "~/libs/bootstrap/js/bootstrap.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/leaflet").Include(
                         "~/libs/leaflet/leaflet.js",

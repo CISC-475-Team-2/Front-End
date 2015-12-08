@@ -34,6 +34,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>OnlyFilesToRunTheApp</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -173,6 +174,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\data\data.json" />
+    <Content Include="Content\data\userData.json" />
     <Content Include="css\bootstrap.min.css" />
     <Content Include="Content\Images\default-user.png" />
     <Content Include="Content\Images\Map-Conshohocken-Floor-1.svg" />
@@ -191,14 +194,40 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="css\Site.css" />
-    <Content Include="Content\data\data.json" />
-    <Content Include="Content\data\userData.json" />
     <Content Include="js\adminModule.js" />
     <Content Include="js\jquery.min.js" />
     <Content Include="js\map.js" />
     <Content Include="js\mapController.js" />
     <Content Include="js\mapModule.js" />
     <Content Include="js\_references.js" />
+    <Content Include="libs\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="libs\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="libs\bootstrap\css\bootstrap.css" />
+    <Content Include="libs\bootstrap\css\bootstrap.min.css" />
+    <Content Include="libs\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="libs\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="libs\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="libs\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="libs\bootstrap\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="libs\bootstrap\js\bootstrap.js" />
+    <Content Include="libs\bootstrap\js\bootstrap.min.js" />
+    <Content Include="libs\bootstrap\js\npm.js" />
+    <Content Include="libs\leaflet\images\layers-2x.png" />
+    <Content Include="libs\leaflet\images\layers.png" />
+    <Content Include="libs\leaflet\images\marker-icon-2x.png" />
+    <Content Include="libs\leaflet\images\marker-icon.png" />
+    <Content Include="libs\leaflet\images\marker-shadow.png" />
+    <Content Include="libs\leaflet\leaflet-indoor\examples\index.html" />
+    <Content Include="libs\leaflet\leaflet-indoor\examples\jquery.min.js" />
+    <Content Include="libs\leaflet\leaflet-indoor\examples\leaflet-src.js" />
+    <Content Include="libs\leaflet\leaflet-indoor\examples\leaflet.css" />
+    <Content Include="libs\leaflet\leaflet-indoor\examples\live\index.html" />
+    <Content Include="libs\leaflet\leaflet-indoor\examples\live\osmtogeojson.js" />
+    <Content Include="libs\leaflet\leaflet-indoor\leaflet-indoor.js" />
+    <Content Include="libs\leaflet\leaflet-src.js" />
+    <Content Include="libs\leaflet\leaflet.css" />
+    <Content Include="libs\leaflet\leaflet.js" />
+    <Content Include="libs\leaflet\LICENSE.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -214,15 +243,20 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="libs\bootstrap\" />
-    <Folder Include="libs\leaflet\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="libs\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="libs\bootstrap\css\bootstrap.css.map" />
+    <Content Include="js\jquery.min.map" />
+    <Content Include="libs\leaflet\leaflet-indoor\examples\data.json" />
+    <Content Include="libs\leaflet\leaflet-indoor\LICENSE" />
+    <Content Include="libs\leaflet\leaflet-indoor\README.md" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Shared\MapPartial.cshtml" />
+    <None Include="Properties\PublishProfiles\SeatingChart.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
