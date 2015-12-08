@@ -13,7 +13,14 @@
                 globals.map = map;
                 globals.mapObject = map.getMap();
                 globals.mapObject.on('click', function (e) {
-                    newMarkerPrompt(e);
+                    var test1 = e.originalEvent.srcElement.tagName == 'BUTTON';
+                    var test2 = e.originalEvent.srcElement.type == 'Submit';
+                    var test3 = e.originalEvent.target.tagName == 'BUTTON';
+                    var test4 = e.originalEvent.target.type == 'Submit';
+                    if (!test1 && !test2 && !test3 && !test4) {
+                        newMarkerPrompt(e);
+                    }
+                    
                 });
                 globals.mapController = controller;
             }
