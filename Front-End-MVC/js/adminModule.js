@@ -68,7 +68,7 @@
                 var localPortCache = JSON.parse(JSON.stringify(portMappingDataCache));
                 var userDataCache = globals.mapController.getUserDataCache();
                 $.each(userDataCache, function (switchKey, switchValue) {
-                    $.each(switchValue.ports, function (portKey, portValue) {
+                    $.each(switchValue, function (portKey, portValue) {
                         $.each(localPortCache.features, function (index, feature) {
                             if (feature.properties.switchName == switchKey && feature.properties.port == portKey) {
                                 feature.users.push(portValue);

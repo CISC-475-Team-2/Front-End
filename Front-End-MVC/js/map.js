@@ -15,7 +15,7 @@ $('document').ready(function () {
 	map.addFloor(2, 1, 'Content/Images/Map-San-Diego.svg', imageBounds);
 	
 	var controller = $.mapController();
-	controller.init(map, 'Content/data/userData.json', 'Content/data/data.json');
+	controller.init(map, 'http://localhost:53853/api/SeatingChart', 'Content/data/data.json');
 	map.setController(controller);
 
 	var admin = $.adminModule();

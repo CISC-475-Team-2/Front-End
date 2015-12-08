@@ -11,6 +11,7 @@
             }, options),
             init: function (map, userDataPath, mapDataPath) {
                 controller.getData(userDataPath, function (userData) {
+                    userData = JSON.parse(userData);
                     if (!userData || $.isEmptyObject(userData) || userData == null || userData == "" || userData == undefined || userData.length == 0) {
                         userData = defaultUserJson;
                     }
@@ -21,7 +22,7 @@
                         }
                         portMappingDataCache = JSON.parse(JSON.stringify(mapData));
                         $.each(userData, function (switchKey, switchValue) {
-                            $.each(switchValue.ports, function (portKey, portValue) {
+                            $.each(switchValue, function (portKey, portValue) {
                                 $.each(mapData.features, function (index, feature) {
                                     if (feature.properties.switchName == switchKey && feature.properties.port == portKey) {
                                         feature.users.push(portValue);
