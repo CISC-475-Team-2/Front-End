@@ -10,13 +10,19 @@
             options: $.extend({
             }, options),
             init: function (map, userDataPath, mapDataPath) {
-                controller.getData(userDataPath, function (userData) {
-                    userData = JSON.parse(userData);
+                controller.getData(userDataPath, 'json', function (userData) {
+                    try{
+                        userData = JSON.parse(userData);
+                    }
+                    catch (e) {
+                        // try to parse it in case it is returned as text/plain
+                        // If we end up here we got actual JSON, yay! Don't do anything.
+                    }
                     if (!userData || $.isEmptyObject(userData) || userData == null || userData == "" || userData == undefined || userData.length == 0) {
                         userData = defaultUserJson;
                     }
                     userDataCache = userData;
-                    controller.getData(mapDataPath, function (mapData) {
+                    controller.getData(mapDataPath, 'json', function (mapData) {
                         if (!mapData || $.isEmptyObject(mapData) || mapData == null || mapData == "" || mapData == undefined || mapData.length == 0) {
                             mapData = defaultJson;
                         }
@@ -60,7 +66,7 @@
                         function (request, status, error) {
                             var userData = defaultUserJson;
                             userDataCache = userData;
-                            controller.getData(mapDataPath, function (mapData) {
+                            controller.getData(mapDataPath, 'json', function (mapData) {
                                 if (!mapData || $.isEmptyObject(mapData) || mapData == null || mapData == "" || mapData == undefined || mapData.length == 0) {
                                     mapData = defaultJson;
                                 }
@@ -148,11 +154,11 @@
                     map.populateUserList();
                 });
             },
-            getData: function (url, success, error) {
+            getData: function (url, type, success, error) {
                 $.ajax({
                     cache: false,
                     url: url,
-                    dataType: 'json',
+                    dataType: type,
                     success: success,
                     error: error || function (request, status, error) {
                         console.log('error in mapController.getData: ' + error);

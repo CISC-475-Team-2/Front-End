@@ -297,8 +297,8 @@
                                     '<img src="Content/Images/default-user.png">' +
                                 '</div>' +
                                 '<div class="user-info">' +
-                                    '<h3 class="user-info-title"><a href="http://whois/Default/Profile?employeeId=' + id + '">' + name + '</a>' +
-                                        ' (<a href="mailto:' + email + '">' + email + '</a>)</h3>' +
+                                    '<h3 class="user-info-title"><a href="http://whois/Default/Profile?employeeId=' + id + '">' + name + '</a></h3>' +
+                                    '<div class="user-info-details"><a href="mailto:' + email + '">' + email + '</a></div>' +
                                     '<div class="user-info-details">' + dept + '</div>' +
                                     '<div class="user-info-details">' + city + '</div>' +
                                 '</div>' +
@@ -374,8 +374,8 @@
 									'<img src="Content/Images/default-user.png">' +
 								'</div>' +
 								'<div class="user-info">' +
-									'<h3 class="user-info-title"><a href="http://whois/Default/Profile?employeeId=' + id + '">' + name + '</a>' +
-									    ' (<a href="mailto:' + email + '">' + email + '</a>)</h3>' +
+									'<h3 class="user-info-title"><a href="http://whois/Default/Profile?employeeId=' + id + '">' + name + '</a></h3>' +
+                                    '<div class="user-info-details"><a href="mailto:' + email + '">' + email + '</a></div>' +
 									'<div class="user-info-details">' + dept + '</div>' +
 									'<div class="user-info-details">' + city + '</div>' +
 								'</div>' +

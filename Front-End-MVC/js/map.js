@@ -1,4 +1,5 @@
 $('document').ready(function () {
+    L.Icon.Default.imagePath = '../libs/leaflet/images/';
     $.ajaxSetup({ cache: false });  // disable cache so when markers are added or removed we update
 	var map = $.mapModule();
 	map.init();
