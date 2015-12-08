@@ -241,6 +241,8 @@
                 globals.currentFloor = 1;
                 controls.addLevelControl(officeNum);
                 globals.currentOffice = officeNum;
+                globals.mapObject.panTo(map.options.center);
+                globals.mapObject.setZoom(map.options.zoom);
             },
         };
 

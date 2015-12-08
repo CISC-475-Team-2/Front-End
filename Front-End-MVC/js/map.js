@@ -11,7 +11,7 @@ $('document').ready(function () {
 	map.addFloor(1, 3, 'Content/Images/Map-Conshohocken-Floor-3.svg', imageBounds);
 	map.addFloor(1, 4, 'Content/Images/Map-Conshohocken-Floor-4.svg', imageBounds);
 	
-	imageBounds = [[49.41873, 8.67689], [49.42073, 8.67824]];
+	imageBounds = [[49.41822, 8.67758], [49.42043, 8.67955]];
 	map.addOffice(2, 'San Diego');
 	map.addFloor(2, 1, 'Content/Images/Map-San-Diego.svg', imageBounds);
 	
