@@ -1,4 +1,4 @@
-@media (max-width: 400px) {
+@media (max-width: 600px) {
   /* CSS goes here */
   #user-panel {
      width: 300px!important;
@@ -10,6 +10,22 @@
 
   .leaflet-control-zoom.leaflet-bar.leaflet-control {
         display: none;
+    }
+
+  footer{
+      display: none!important;
+  }
+  body{
+        padding-bottom: 0!important;
+    }
+}
+
+@media (max-height: 400px){
+    footer{
+        display: none!important;
+    }
+    body{
+        padding-bottom: 0!important;
     }
 }
 
