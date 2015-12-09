@@ -3,6 +3,7 @@
         var cache;
         var userDataCache;
         var portMappingDataCache;
+        var resetSearch = true;
 
         var defaultJson = { "type": "FeatureCollection", "features": [] };
         var defaultUserJson = {};
@@ -119,7 +120,15 @@
                 });
 
                 $('#search-input').on('input', function (event) {
-                    $('#search-form').submit();
+                    if ($('#search-input').val() || resetSearch) {
+                        $('#search-form').submit();
+                        if (resetSearch) {
+                            resetSearch = false;
+                        }
+                        else {
+                            resetSearch = true;
+                        }
+                    }
                 });
 
                 $('#search-form').submit(function (event) {
