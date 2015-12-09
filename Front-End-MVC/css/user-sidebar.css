@@ -66,7 +66,7 @@
 
 /*override .leaflet-left so it doesn't overlap sidebar button*/
 .leaflet-left{
-	left:423px!important;
+	left:373px!important;
 	-webkit-transition: left .4s ease;
     -moz-transition: left .4s ease;
     -o-transition: left .4s ease;
