@@ -228,6 +228,9 @@
     <Content Include="libs\leaflet\leaflet.css" />
     <Content Include="libs\leaflet\leaflet.js" />
     <Content Include="libs\leaflet\LICENSE.txt" />
+    <Content Include="tests\testImage.png" />
+    <Content Include="tests\tests.html" />
+    <Content Include="tests\tests.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -257,6 +260,8 @@
     <Content Include="Views\Home\Admin.cshtml" />
     <Content Include="Views\Shared\MapPartial.cshtml" />
     <None Include="Properties\PublishProfiles\SeatingChart.pubxml" />
+    <Content Include="tests\data.json" />
+    <Content Include="tests\userData.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -272,7 +277,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>55006</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
