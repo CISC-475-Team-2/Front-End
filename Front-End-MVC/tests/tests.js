@@ -26,7 +26,6 @@ QUnit.test('Adding offices.', function(assert){
 	assert.equal(this.map.officeList.length, 1, 'Office list has 1 element.');
 	assert.deepEqual(this.map.officeList, [{'id': 1, 'name': 'Conshohocken', 'floorList': []}], 'Office 1 added.');
 	assert.equal(officeDropdown.children().length, 1, 'Office dropdown contains 1 child.');
-	assert.deepEqual(officeDropdown.children()[0].innerHTML, '<a href="#" id="office1">Conshohocken</a>', 'Dropdown contains office 1');
 	
 	// office 2
 	this.map.addOffice(2, 'San Diego');
@@ -36,8 +35,6 @@ QUnit.test('Adding offices.', function(assert){
 			{'id': 2, 'name': 'San Diego', 'floorList': []},
 		], 'Office 2 added.');
 	assert.equal(officeDropdown.children().length, 2, 'Office dropdown contains 2 children.');
-	assert.deepEqual(officeDropdown.children()[0].innerHTML, '<a href="#" id="office1">Conshohocken</a>', 'Dropdown contains office 1');
-	assert.deepEqual(officeDropdown.children()[1].innerHTML, '<a href="#" id="office2">San Diego</a>', 'Dropdown contains office 2');
 
 	// floors
 	this.map.addFloor(1, 1, 'testImage.png', [[49.41873, 8.67689], [49.41973, 8.67959]]);
