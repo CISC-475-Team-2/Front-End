@@ -32,3 +32,7 @@ html, body, #map {
 #notificationArea div {
     margin: 0 auto;
 }
+
+.leaflet-control-attribution.leaflet-control{
+    display:none;
+}

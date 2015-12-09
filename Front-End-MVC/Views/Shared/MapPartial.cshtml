@@ -29,9 +29,14 @@
         <div id="user-panel-inner" class="panel-body">
             <form class="navbar-form" id="search-form">
                 <div class="form-group">
-                    <input type="text" placeholder="Name" class="form-control" id="search-input">
+                    <div class="input-group">
+                        <input type="text" placeholder="Name" class="form-control" id="search-input">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-success" data-toggle="collapse" data-target="#navbar.in"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                        </span>
+                    </div><!-- /input-group -->
                 </div>
-                <button type="submit" class="btn btn-success" data-toggle="collapse" data-target="#navbar.in">Search</button>
+                
             </form>
             <div id="user-results">
             </div>

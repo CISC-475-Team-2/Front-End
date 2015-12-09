@@ -113,8 +113,12 @@
                 $.each(map.getOfficeList(), function (index, value) {
                     $('#office' + value.id).click(function (event) {
                         map.changeOfficeLayer(value.id);
+                        // add office name to selected value in dropdown
                         var text = $(this).text();
                         $(this).parents('.dropdown').find('.dropdown-toggle').html(text + '<span class="caret"></span>');
+
+                        // hide mobile menu after selection
+                        $('#navbar').collapse('hide');
                         map.populateUserList();
                     });
                 });
@@ -142,8 +146,10 @@
 
                     // blur then focus: this keeps the user in the control
                     // but clears auto-complete pop-out when they submit
-                    $("#search-input").blur();
-                    $("#search-input").focus();
+                    if (event.originalEvent) {
+                        $("#search-input").blur();
+                        $("#search-input").focus();
+                    }
                 });
 
                 $('[data-toggle="toggle-user-panel"]').click(function () {
