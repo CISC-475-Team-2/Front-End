@@ -56,9 +56,9 @@
                     function (request, status, error) {
                         var mapData = defaultJson;
                         portMappingDataCache = JSON.parse(JSON.stringify(mapData));
-                        console.log(portMappingDataCache);
+                        
                         $.each(userData, function (switchKey, switchValue) {
-                            $.each(switchValue.ports, function (portKey, portValue) {
+                            $.each(switchValue, function (portKey, portValue) {
                                 $.each(mapData.features, function (index, feature) {
                                     if (feature.properties.switchName == switchKey && feature.properties.port == portKey) {
                                         feature.users.push(portValue);
@@ -83,7 +83,7 @@
                                 }
                                 portMappingDataCache = JSON.parse(JSON.stringify(mapData));
                                 $.each(userData, function (switchKey, switchValue) {
-                                    $.each(switchValue.ports, function (portKey, portValue) {
+                                    $.each(switchValue, function (portKey, portValue) {
                                         $.each(mapData.features, function (index, feature) {
                                             if (feature.properties.switchName == switchKey && feature.properties.port == portKey) {
                                                 feature.users.push(portValue);
@@ -102,7 +102,7 @@
                                 var mapData = defaultJson;
                                 portMappingDataCache = JSON.parse(JSON.stringify(mapData));
                                 $.each(userData, function (switchKey, switchValue) {
-                                    $.each(switchValue.ports, function (portKey, portValue) {
+                                    $.each(switchValue, function (portKey, portValue) {
                                         $.each(mapData.features, function (index, feature) {
                                             if (feature.properties.switchName == switchKey && feature.properties.port == portKey) {
                                                 feature.users.push(portValue);
