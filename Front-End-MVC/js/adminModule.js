@@ -90,13 +90,13 @@
                 globals.map.refreshLayer();
                 //$('#newMarkerModal').modal('hide');
 
-                var stringified = JSON.stringify({ data: JSON.stringify(portMappingDataCache) });
+                var stringified = JSON.stringify(JSON.stringify(portMappingDataCache));
                 $.ajax({
                     cache: false,
                     url: 'SaveMarker',
                     type: 'POST',
                     dataType: 'json',
-                    data: stringified,
+                    data: "{ 'path': '" + globals.mapController.getMapDataPath() + "', 'data': " + stringified + " }",
                     contentType: "application/json; charset=utf-8",
                     success: function (response) {
                         // yay

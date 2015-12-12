@@ -24,12 +24,11 @@ namespace Front_End_MVC.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveMarker(string data)
+        public ActionResult SaveMarker(string path, string data)
         {
             try {
-                var jsonData = data;
-                var path = Server.MapPath("~/Content/data/data.json");
-                System.IO.File.WriteAllText(path, jsonData);
+                var pathRel = Server.MapPath("~/" + path);
+                System.IO.File.WriteAllText(pathRel, data);
                 return Json(new { success = true, responseText = "File saved to server." }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)

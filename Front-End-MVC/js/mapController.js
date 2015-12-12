@@ -4,13 +4,15 @@
         var userDataCache;
         var portMappingDataCache;
         var resetSearch = true;
-
+        var userDataPath, mapDataPath;
         var defaultJson = { "type": "FeatureCollection", "features": [] };
         var defaultUserJson = {};
         var controller = {
             options: $.extend({
             }, options),
-            init: function (map, userDataPath, mapDataPath) {
+            init: function (map, userDataPathArg, mapDataPathArg) {
+                userDataPath = userDataPathArg;
+                mapDataPath = mapDataPathArg;
                 controller.getData(userDataPath, 'json', function (userData) {
                     try{
                         userData = JSON.parse(userData);
@@ -24,10 +26,17 @@
                     }
                     userDataCache = userData;
                     controller.getData(mapDataPath, 'json', function (mapData) {
+                        try {
+                            mapData = JSON.parse(mapData);
+                        }
+                        catch (e) {
+                            // try to parse it in case it is returned as text/plain
+                            // If we end up here we got actual JSON, yay! Don't do anything.
+                        }
                         if (!mapData || $.isEmptyObject(mapData) || mapData == null || mapData == "" || mapData == undefined || mapData.length == 0) {
                             mapData = defaultJson;
                         }
-                        portMappingDataCache = JSON.parse(JSON.stringify(mapData));
+                        portMappingDataCache = JSON.parse(JSON.stringify(mapData));  // poor man's clone
                         $.each(userData, function (switchKey, switchValue) {
                             $.each(switchValue, function (portKey, portValue) {
                                 $.each(mapData.features, function (index, feature) {
@@ -47,6 +56,7 @@
                     function (request, status, error) {
                         var mapData = defaultJson;
                         portMappingDataCache = JSON.parse(JSON.stringify(mapData));
+                        console.log(portMappingDataCache);
                         $.each(userData, function (switchKey, switchValue) {
                             $.each(switchValue.ports, function (portKey, portValue) {
                                 $.each(mapData.features, function (index, feature) {
@@ -197,12 +207,20 @@
             },
             setUserDataCache: function (data) {
                 userDataCache = data;
+            },
+            getUserDataPath: function () {
+                return userDataPath;
+            },
+            getMapDataPath: function () {
+                return mapDataPath;
             }
         }
 
         return {
             getData: controller.getData,
             init: controller.init,
+            getUserDataPath: controller.getUserDataPath,
+            getMapDataPath: controller.getMapDataPath,
             getPortMappingDataCache: controller.getPortMappingDataCache,
             setPortMappingDataCache: controller.setPortMappingDataCache,
             getCache: controller.getCache,
